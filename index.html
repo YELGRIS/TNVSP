@@ -26,8 +26,8 @@ html,body{margin:0;padding:0;height:100%;background:var(--bg);font-family:-apple
 input[type=text],input[type=email],input[type=date],select,textarea{width:100%;font-size:15px;padding:7px 9px;margin:2px 0 0;border-radius:10px;border:2px solid #cfd8dc;background:var(--input-bg);color:var(--text)}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(25,118,210,.15)}
 input.err,select.err{border-color:var(--error) !important}
-.field-grid{display:flex;flex-wrap:wrap;gap:3px 6px;align-items:flex-start}
-.field{margin-bottom:3px;position:relative;min-width:60px;transition:transform .15s ease,box-shadow .15s ease}
+.field-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:4px 6px;align-items:start;}
+.field{margin-bottom:2px;}
 .field:focus-within{transform:scale(1.04);box-shadow:0 6px 16px rgba(0,0,0,.2);z-index:10;background:var(--panel);border-radius:6px}
 .field.full{flex:1 1 100%;width:100%}
 .field label{font-size:12px;font-weight:700;line-height:1.2;display:block}
