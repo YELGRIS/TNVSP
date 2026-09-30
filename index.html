@@ -5,580 +5,574 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>TNVSP - Town Member Register</title>
   <style>
-    :root{
-      --bg:#edf7ff;
-      --panel:#ffffff;
-      --soft:#f6fbff;
-      --primary:#1976d2;
-      --primary2:#0d47a1;
-      --green:#2e7d32;
-      --gold:#f9a825;
-      --pink:#ec407a;
-      --purple:#7b1fa2;
-      --red:#d32f2f;
-      --text:#1f2d3d;
-      --muted:#607889;
-      --line:#dfeaf3;
-      --shadow:0 8px 24px rgba(25,118,210,0.12);
-      --radius:18px;
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #f5f5f5 100%);
+      color: #263238;
     }
 
-    * { box-sizing:border-box; }
-    html,body{
-      margin:0;
-      padding:0;
-      height:100%;
-      background:linear-gradient(180deg,#edf8ff,#f7fbff 35%,#ffffff);
-      color:var(--text);
-      font-family:Segoe UI, Tahoma, Arial, sans-serif;
+    body {
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
     }
 
-    body{
-      display:flex;
-      justify-content:center;
-      min-height:100vh;
+    #app {
+      width: min(100%, 920px);
+      min-height: 100vh;
+      padding-bottom: 100px;
+      background: transparent;
     }
 
-    #app{
-      width:min(100%, 920px);
-      min-height:100vh;
-      padding-bottom:92px;
-      background:transparent;
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: white;
+      border-bottom: 3px solid #1976d2;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:20;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      background:rgba(255,255,255,0.96);
-      backdrop-filter:blur(10px);
-      border-bottom:2px solid var(--line);
-      padding:12px 16px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-      flex:1;
+    .badge-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #1976d2, #7b1fa2);
+      color: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      flex-shrink: 0;
     }
 
-    .brand-badge{
-      width:40px; height:40px;
-      display:grid; place-items:center;
-      background:linear-gradient(135deg,var(--primary),var(--purple));
-      color:white;
-      border-radius:12px;
-      font-weight:900;
-      box-shadow:var(--shadow);
-      font-size:20px;
+    .brand-text h1 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 900;
+      color: #1976d2;
     }
 
-    .brand-text{
-      min-width:0;
-      line-height:1.1;
+    .brand-text p {
+      margin: 2px 0 0 0;
+      font-size: 11px;
+      color: #607889;
     }
 
-    .brand-text strong{
-      display:block;
-      font-size:16px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+    .lang-btn {
+      padding: 10px 14px;
+      background: linear-gradient(135deg, #1976d2, #0d47a1);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    .brand-text small{
-      display:block;
-      color:var(--muted);
-      font-size:11px;
+    .lang-btn:active {
+      opacity: 0.8;
     }
 
-    .langBtn{
-      border:none;
-      background:linear-gradient(135deg,var(--primary),var(--primary2));
-      color:white;
-      font-weight:800;
-      padding:10px 14px;
-      border-radius:12px;
-      box-shadow:var(--shadow);
-      font-size:13px;
-      cursor:pointer;
+    /* Stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 10px 16px;
     }
 
-    .statusbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px 16px 8px;
-      color:var(--muted);
-      font-size:12px;
+    .stat-card {
+      background: white;
+      border: 1px solid #dfeaf3;
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    .syncPill{
-      background:rgba(46,125,50,0.08);
-      color:var(--green);
-      border-radius:999px;
-      padding:6px 10px;
-      font-weight:800;
+    .stat-icon {
+      font-size: 20px;
+      margin-bottom: 4px;
     }
 
-    .hero{
-      padding:0 16px 8px;
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0,1fr));
-      gap:10px;
+    .stat-number {
+      font-size: 22px;
+      font-weight: 900;
+      color: #1976d2;
     }
 
-    .stat{
-      background:linear-gradient(180deg,var(--panel),var(--soft));
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-      border-radius:var(--radius);
-      padding:12px 10px;
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      min-height:86px;
+    .stat-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #607889;
+      text-transform: uppercase;
+      margin-top: 4px;
     }
 
-    .stat .icon{ font-size:18px; }
-    .stat .num{
-      font-size:22px;
-      font-weight:900;
-      color:var(--primary);
-      line-height:1;
-    }
-    .stat .label{
-      font-size:11px;
-      font-weight:800;
-      letter-spacing:0.04em;
-      text-transform:uppercase;
-      color:var(--muted);
+    /* Sections */
+    .section {
+      margin: 10px 16px;
+      background: white;
+      border: 1px solid #dfeaf3;
+      border-radius: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      overflow: hidden;
     }
 
-    .panel{
-      margin:10px 16px;
-      background:linear-gradient(180deg,#fff,#f9fcff);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      overflow:hidden;
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, #f8fbff, #edf5ff);
+      border-bottom: 1px solid #dfeaf3;
     }
 
-    .panel-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:14px 16px 12px;
-      background:linear-gradient(135deg,#f8fbff,#edf5ff);
-      border-bottom:1px solid var(--line);
+    .section-title {
+      font-size: 15px;
+      font-weight: 900;
+      color: #1976d2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .panel-title{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-size:15px;
-      font-weight:900;
-      color:var(--primary);
+    .mini-badge {
+      width: 28px;
+      height: 28px;
+      background: rgba(25, 118, 210, 0.1);
+      color: #1976d2;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 900;
+      flex-shrink: 0;
     }
 
-    .mini{
-      width:28px;height:28px;border-radius:8px;
-      display:grid;place-items:center;
-      background:rgba(25,118,210,0.10);
-      color:var(--primary);
-      font-size:13px;
-      font-weight:900;
+    .count-badge {
+      background: rgba(249, 168, 37, 0.14);
+      color: #8a5b00;
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 11px;
+      font-weight: 800;
     }
 
-    .badge{
-      background:rgba(249,168,37,0.14);
-      color:#8a5b00;
-      border-radius:999px;
-      padding:5px 9px;
-      font-size:11px;
-      font-weight:800;
+    .section-body {
+      padding: 10px 12px;
     }
 
-    .panel-body{
-      padding:10px 12px 12px;
+    .search-box {
+      width: 100%;
+      padding: 11px 12px;
+      border: 2px solid #dfeaf3;
+      border-radius: 12px;
+      background: #f7fafe;
+      font-size: 15px;
+      margin-bottom: 10px;
+      outline: none;
     }
 
-    .search{
-      width:100%;
-      border:2px solid var(--line);
-      border-radius:12px;
-      background:#f7fafe;
-      padding:11px 12px;
-      font-size:15px;
-      color:var(--text);
-      margin-bottom:10px;
-      outline:none;
+    .search-box:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
     }
 
-    .search:focus{
-      border-color:var(--primary);
-      box-shadow:0 0 0 4px rgba(25,118,210,0.12);
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .list{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
+    .list-item {
+      padding: 12px;
+      border: 1px solid #dfeaf3;
+      border-radius: 12px;
+      background: #fff;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      transition: all 0.15s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .item{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 12px;
-      cursor:pointer;
-      transition:0.12s ease;
+    .list-item:active {
+      transform: scale(0.98);
+      background: #f7fafe;
     }
 
-    .item:active{ transform:scale(0.995); }
-
-    .item.selected{
-      border-color:var(--primary);
-      background:rgba(25,118,210,0.05);
-      box-shadow:inset 0 0 0 1px rgba(25,118,210,0.12);
+    .list-item.selected {
+      border-color: #1976d2;
+      background: rgba(25, 118, 210, 0.05);
+      box-shadow: inset 0 0 0 1px rgba(25, 118, 210, 0.12);
     }
 
-    .item-title{
-      font-weight:800;
-      font-size:15px;
-      margin-bottom:4px;
-      color:var(--text);
+    .item-content {
+      flex: 1;
+      min-width: 0;
     }
 
-    .item-sub{
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.4;
+    .item-title {
+      font-weight: 800;
+      font-size: 15px;
+      color: #263238;
+      margin-bottom: 4px;
+      word-break: break-word;
     }
 
-    .item-arrow{
-      color:var(--primary);
-      font-size:18px;
-      font-weight:900;
-      padding-top:2px;
+    .item-detail {
+      font-size: 12px;
+      color: #607889;
+      line-height: 1.4;
     }
 
-    .empty{
-      text-align:center;
-      color:var(--muted);
-      padding:18px 12px 6px;
-      font-size:14px;
-      line-height:1.5;
+    .item-arrow {
+      font-size: 18px;
+      color: #1976d2;
+      font-weight: 900;
+      flex-shrink: 0;
     }
 
-    .bottomBar{
-      position:fixed;
-      left:0; bottom:0; width:100%;
-      background:rgba(255,255,255,0.98);
-      border-top:2px solid var(--line);
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      box-shadow:0 -8px 24px rgba(0,0,0,0.06);
-      padding-bottom:max(12px, env(safe-area-inset-bottom));
-      z-index:30;
+    .empty-msg {
+      text-align: center;
+      color: #607889;
+      padding: 20px 12px;
+      font-size: 14px;
     }
 
-    .bottomBtn{
-      border:none;
-      background:transparent;
-      color:var(--primary);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:4px;
-      min-height:72px;
-      font-weight:800;
-      font-size:12px;
-      padding:10px 8px 12px;
-      cursor:pointer;
+    /* Bottom Bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 2px solid #dfeaf3;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+      z-index: 50;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
-    .bottomBtn .icon{
-      font-size:24px;
-      line-height:1;
+    .btn {
+      border: none;
+      background: transparent;
+      color: #1976d2;
+      padding: 10px 8px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      min-height: 70px;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .bottomBtn.secondary{ color:var(--pink); }
-    .bottomBtn.success{ color:var(--green); }
-    .bottomBtn.warning{ color:var(--gold); }
-
-    .sheet{
-      position:fixed;
-      inset:0;
-      background:rgba(14,23,34,0.35);
-      display:none;
-      align-items:flex-end;
-      z-index:40;
+    .btn:active {
+      opacity: 0.7;
     }
 
-    .sheet.show{ display:flex; }
-
-    .sheetCard{
-      width:min(100%, 920px);
-      max-height:86vh;
-      overflow:auto;
-      background:linear-gradient(180deg,#fff,#f9fbff);
-      border-radius:24px 24px 0 0;
-      padding:18px 16px 24px;
-      box-shadow:0 -15px 35px rgba(0,0,0,0.12);
+    .btn-icon {
+      font-size: 24px;
+      line-height: 1;
     }
 
-    .sheetHead{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:12px;
+    .btn.danger { color: #d32f2f; }
+    .btn.success { color: #2e7d32; }
+    .btn.warning { color: #f9a825; }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 100;
+      align-items: flex-end;
+      justify-content: center;
     }
 
-    .sheetTitle{
-      color:var(--primary);
-      font-weight:900;
-      font-size:18px;
+    .modal.show {
+      display: flex;
     }
 
-    .closeBtn, .saveBtn, .cancelBtn{
-      border:none;
-      border-radius:12px;
-      font-weight:800;
-      padding:12px 14px;
-      font-size:15px;
-      cursor:pointer;
+    .modal-content {
+      width: min(100%, 920px);
+      max-height: 90vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      background: white;
+      border-radius: 20px 20px 0 0;
+      padding: 18px 16px 24px;
+      box-shadow: 0 -8px 20px rgba(0,0,0,0.15);
     }
 
-    .closeBtn{
-      background:#edf3ff;
-      color:var(--primary);
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
     }
 
-    .fieldGrid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px;
-      margin-bottom:10px;
+    .modal-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: #1976d2;
     }
 
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
+    .close-btn {
+      padding: 8px 12px;
+      background: #edf3ff;
+      color: #1976d2;
+      border: none;
+      border-radius: 8px;
+      font-weight: 800;
+      cursor: pointer;
     }
 
-    .field.full{
-      grid-column:1 / -1;
+    /* Form */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
-    .field label{
-      font-size:12px;
-      font-weight:800;
-      letter-spacing:0.03em;
-      color:var(--muted);
-      text-transform:uppercase;
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    input, select, textarea{
-      width:100%;
-      border-radius:12px;
-      border:2px solid var(--line);
-      background:#f7fafe;
-      color:var(--text);
-      padding:12px 11px;
-      font-size:15px;
-      outline:none;
-      font-family:inherit;
+    .form-field.full {
+      grid-column: 1 / -1;
     }
 
-    input:focus, select:focus, textarea:focus{
-      border-color:var(--primary);
-      box-shadow:0 0 0 4px rgba(25,118,210,0.12);
+    .form-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: #607889;
+      text-transform: uppercase;
     }
 
-    textarea{
-      min-height:88px;
-      resize:vertical;
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 11px;
+      border: 2px solid #dfeaf3;
+      border-radius: 12px;
+      background: #f7fafe;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
     }
 
-    .helper{
-      min-height:14px;
-      font-size:11px;
-      color:var(--muted);
+    input:focus, select:focus, textarea:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
     }
 
-    .helper.error{
-      color:var(--red);
-      font-weight:700;
+    textarea {
+      min-height: 88px;
+      resize: vertical;
     }
 
-    .actions{
-      display:flex;
-      gap:10px;
-      margin-top:12px;
+    .form-helper {
+      min-height: 14px;
+      font-size: 11px;
+      color: #607889;
     }
 
-    .cancelBtn{
-      flex:1;
-      background:#edf3ff;
-      color:var(--primary);
+    .form-helper.error {
+      color: #d32f2f;
+      font-weight: 700;
     }
 
-    .saveBtn{
-      flex:1;
-      background:linear-gradient(135deg,var(--primary),var(--primary2));
-      color:white;
-      box-shadow:var(--shadow);
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
     }
 
-    @media (max-width:640px){
-      .fieldGrid{
-        grid-template-columns:1fr;
+    .form-actions button {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .btn-cancel {
+      background: #edf3ff;
+      color: #1976d2;
+    }
+
+    .btn-save {
+      background: linear-gradient(135deg, #1976d2, #0d47a1);
+      color: white;
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+    }
+
+    .form-tip {
+      font-size: 11px;
+      color: #607889;
+      padding: 8px 0;
+      margin-bottom: 10px;
+      border-top: 1px solid #dfeaf3;
+      padding-top: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
   <div id="app">
-    <header class="topbar">
+    <div class="header">
       <div class="brand">
-        <div class="brand-badge">T</div>
+        <div class="badge-icon">T</div>
         <div class="brand-text">
-          <strong id="appName">TNVSP</strong>
-          <small id="subTitle">Town Member Register</small>
+          <h1>TNVSP</h1>
+          <p id="subtitle">Town Member Register</p>
         </div>
       </div>
-      <button class="langBtn" id="langToggle">தமிழ்</button>
-    </header>
-
-    <div class="statusbar">
-      <span id="statusText">Ready to collect</span>
-      <span class="syncPill" id="syncPill">Offline</span>
+      <button class="lang-btn" id="langBtn">தமிழ்</button>
     </div>
 
-    <section class="hero">
-      <div class="stat">
-        <div class="icon">🏛️</div>
-        <div class="num" id="assoCount">0</div>
-        <div class="label">Associations</div>
+    <div style="padding: 12px 16px; font-size: 12px; color: #607889; background: rgba(25,118,210,0.02);">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+        <span id="status">Ready</span>
+        <span style="background: rgba(46,125,50,0.1); color: #2e7d32; border-radius: 999px; padding: 6px 10px; font-weight: 800; font-size: 11px;" id="syncStatus">Offline</span>
       </div>
-      <div class="stat">
-        <div class="icon">🏪</div>
-        <div class="num" id="firmCount">0</div>
-        <div class="label">Firms</div>
-      </div>
-      <div class="stat">
-        <div class="icon">👥</div>
-        <div class="num" id="repCount">0</div>
-        <div class="label">Representatives</div>
-      </div>
-    </section>
+    </div>
 
-    <section class="panel">
-      <div class="panel-head">
-        <div class="panel-title"><span class="mini">A</span><span id="assoLabel">Associations</span></div>
-        <span class="badge" id="assoBadge">0</span>
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-icon">🏛️</div>
+        <div class="stat-number" id="assoCount">0</div>
+        <div class="stat-label">Associations</div>
       </div>
-      <div class="panel-body">
-        <input id="assoSearch" class="search" type="text" placeholder="Search associations..." />
+      <div class="stat-card">
+        <div class="stat-icon">🏪</div>
+        <div class="stat-number" id="firmCount">0</div>
+        <div class="stat-label">Firms</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-number" id="repCount">0</div>
+        <div class="stat-label">Representatives</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title"><span class="mini-badge">A</span><span id="assoLabel">Associations</span></div>
+        <span class="count-badge" id="assoBadge">0</span>
+      </div>
+      <div class="section-body">
+        <input id="assoSearch" class="search-box" type="text" placeholder="Search..." />
         <div id="assoList" class="list"></div>
       </div>
-    </section>
+    </div>
 
-    <section class="panel">
-      <div class="panel-head">
-        <div class="panel-title"><span class="mini">F</span><span id="firmLabel">Member Firms</span></div>
-        <span class="badge" id="firmBadge">0</span>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title"><span class="mini-badge">F</span><span id="firmLabel">Member Firms</span></div>
+        <span class="count-badge" id="firmBadge">0</span>
       </div>
-      <div class="panel-body">
-        <input id="firmSearch" class="search" type="text" placeholder="Search firms..." />
+      <div class="section-body">
+        <input id="firmSearch" class="search-box" type="text" placeholder="Search..." />
         <div id="firmList" class="list"></div>
       </div>
-    </section>
+    </div>
 
-    <section class="panel">
-      <div class="panel-head">
-        <div class="panel-title"><span class="mini">R</span><span id="repLabel">Representatives</span></div>
-        <span class="badge" id="repBadge">0</span>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title"><span class="mini-badge">R</span><span id="repLabel">Representatives</span></div>
+        <span class="count-badge" id="repBadge">0</span>
       </div>
-      <div class="panel-body">
-        <input id="repSearch" class="search" type="text" placeholder="Search representatives..." />
+      <div class="section-body">
+        <input id="repSearch" class="search-box" type="text" placeholder="Search..." />
         <div id="repList" class="list"></div>
       </div>
-    </section>
-  </div>
-
-  <div class="bottomBar">
-    <button class="bottomBtn" id="navBtn"><span class="icon">☰</span><span id="navLabel">View</span></button>
-    <button class="bottomBtn secondary" id="deleteBtn"><span class="icon">🗑️</span><span id="deleteLabel">Delete</span></button>
-    <button class="bottomBtn success" id="newBtn"><span class="icon">＋</span><span id="newLabel">New</span></button>
-    <button class="bottomBtn warning" id="editBtn"><span class="icon">✏️</span><span id="editLabel">Edit</span></button>
-  </div>
-
-  <div id="sheet" class="sheet">
-    <div class="sheetCard">
-      <div class="sheetHead">
-        <div id="sheetTitle" class="sheetTitle">New</div>
-        <button id="closeSheet" class="closeBtn">Close</button>
-      </div>
-      <div id="formContainer"></div>
     </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import {
-      collection, getDocs, addDoc, setDoc, deleteDoc, doc,
-      initializeFirestore, persistentLocalCache, persistentMultipleTabManager
-    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+  <div class="bottom-bar">
+    <button class="btn" id="viewBtn"><span class="btn-icon">👁️</span> View</button>
+    <button class="btn danger" id="deleteBtn"><span class="btn-icon">🗑️</span> Delete</button>
+    <button class="btn success" id="newBtn"><span class="btn-icon">➕</span> New</button>
+    <button class="btn warning" id="editBtn"><span class="btn-icon">✏️</span> Edit</button>
+  </div>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBE9-3DfexxDeZgsnbvIsN_EI79LTpHBJY",
-      authDomain: "tnvspmem.firebaseapp.com",
-      projectId: "tnvspmem",
-      storageBucket: "tnvspmem.firebasestorage.app",
-      messagingSenderId: "167496651526",
-      appId: "1:167496651526:web:6fc5421ae426bf2a524487"
-    };
+  <div id="modalOverlay" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">New Record</div>
+        <button class="close-btn" id="closeModalBtn">Close</button>
+      </div>
+      <div id="formContent"></div>
+    </div>
+  </div>
 
-    const LS_ASSO = 'ta_associations';
-    const LS_FIRM = 'ta_firms';
-    const LS_REP = 'ta_representatives';
-    const LS_LANG = 'ta_lang';
-
-    let ASSOS = [], FIRMS = [], REPS = [], db = null, localMode = false;
-    let lang = JSON.parse(localStorage.getItem(LS_LANG) || '"ta"');
+  <script>
+    // Simple state management
+    let ASSOS = [];
+    let FIRMS = [];
+    let REPS = [];
     let selected = { asso: null, firm: null, rep: null };
+    let lang = localStorage.getItem('lang') || 'ta';
 
-    const TA = {
+    const translations = {
       en: {
-        title: 'Town Member Register',
-        associations: 'Associations',
-        firms: 'Member Firms',
-        reps: 'Representatives',
-        ready: 'Ready to collect',
-        offline: 'Offline',
-        online: 'Synced',
-        searchAssociation: 'Search associations...',
-        searchFirm: 'Search firms...',
-        searchRep: 'Search representatives...',
+        assoc: 'Associations',
+        firm: 'Member Firms',
+        rep: 'Representatives',
+        search: 'Search...',
         new: 'New',
         edit: 'Edit',
         delete: 'Delete',
@@ -586,49 +580,20 @@
         close: 'Close',
         save: 'Save',
         cancel: 'Cancel',
-        addAssociation: 'New Association',
-        addFirm: 'New Firm',
-        addRep: 'New Representative',
-        editAssociation: 'Edit Association',
-        editFirm: 'Edit Firm',
-        editRep: 'Edit Representative',
-        required: 'This is required.',
-        quickTip: 'Tip: keep entries short and use phone numbers first.',
-        duplicatePhone: 'This phone number already exists.',
-        noAssoc: 'No associations yet. Tap New to add one.',
-        noFirm: 'No firms yet.',
-        noRep: 'No representatives yet.',
-        associationName: 'Association Name',
-        regNo: 'Registration No.',
+        name: 'Name',
         phone: 'Phone',
         email: 'Email',
-        geoType: 'Geo Type',
-        geoScope: 'Geo Scope',
-        firmName: 'Firm Name',
-        category: 'Business Category',
-        repName: 'Representative Name',
-        relation: 'Relation',
-        phone1: 'Phone 1',
-        phone2: 'Phone 2',
-        aadhar: 'Aadhaar',
-        dob: 'Date of Birth',
         town: 'Town',
-        district: 'District',
-        province: 'Province',
-        pin: 'Pincode',
-        notes: 'Notes'
+        notes: 'Notes',
+        required: 'Required',
+        saved: 'Saved!',
+        deleted: 'Deleted!'
       },
       ta: {
-        title: 'கிராம / நகர உறுப்பினர் பதிவேடு',
-        associations: 'சங்கங்கள்',
-        firms: 'உறுப்பினர் நிறுவனங்கள்',
-        reps: 'பிரதிநிதிகள்',
-        ready: 'பதிவு செய்யத் தயாராக உள்ளது',
-        offline: 'ஆஃப்லைன்',
-        online: 'சின்க்',
-        searchAssociation: 'சங்கங்களைத் தேடுங்கள்...',
-        searchFirm: 'நிறுவனங்களைத் தேடுங்கள்...',
-        searchRep: 'பிரதிநிதிகளைத் தேடுங்கள்...',
+        assoc: 'சங்கங்கள்',
+        firm: 'நிறுவனங்கள்',
+        rep: 'பிரதிநிதிகள்',
+        search: 'தேடுங்கள்...',
         new: 'புதியது',
         edit: 'திருத்து',
         delete: 'நீக்கு',
@@ -636,64 +601,35 @@
         close: 'மூடு',
         save: 'சேமி',
         cancel: 'ரத்து',
-        addAssociation: 'புதிய சங்கம்',
-        addFirm: 'புதிய நிறுவனம்',
-        addRep: 'புதிய பிரதிநிதி',
-        editAssociation: 'சங்கத்தை திருத்து',
-        editFirm: 'நிறுவனத்தை திருத்து',
-        editRep: 'பிரதிநிதியை திருத்து',
-        required: 'இதனை நிரப்புவது அவசியம்.',
-        quickTip: 'செய்தி: குறுகிய விவரங்கள் சேர்க்கவும்.',
-        duplicatePhone: 'இந்த தொலைபேசி ஏற்கனவே உள்ளது.',
-        noAssoc: 'இன்னும் சங்கங்கள் இல்லை.',
-        noFirm: 'இன்னும் நிறுவனங்கள் இல்லை.',
-        noRep: 'இன்னும் பிரதிநிதிகள் இல்லை.',
-        associationName: 'சங்கத்தின் பெயர்',
-        regNo: 'பதிவு எண்',
+        name: 'பெயர்',
         phone: 'தொலைபேசி',
         email: 'மின்னஞ்சல்',
-        geoType: 'புவியியல் வகை',
-        geoScope: 'புவியியல் எல்லை',
-        firmName: 'நிறுவனத்தின் பெயர்',
-        category: 'வணிக வகை',
-        repName: 'பிரதிநிதியின் பெயர்',
-        relation: 'உறவு',
-        phone1: 'தொலைபேசி 1',
-        phone2: 'தொலைபேசி 2',
-        aadhar: 'ஆதார் எண்',
-        dob: 'பிறந்த தேதி',
         town: 'நகரம்',
-        district: 'மாவட்டம்',
-        province: 'மாநிலம்',
-        pin: 'அஞ்சல் குறியீடு',
-        notes: 'குறிப்புகள்'
+        notes: 'குறிப்புகள்',
+        required: 'அவசியம்',
+        saved: 'சேமிக்கப்பட்டது!',
+        deleted: 'நீக்கப்பட்டது!'
       }
     };
 
-    const geoOptions = ['area','town/city','district','province'];
+    const t = (key) => translations[lang][key] || key;
 
-    function t(k){ return (TA[lang] && TA[lang][k]) || k; }
-    function readJSON(key, fallback){
-      try{ const raw = localStorage.getItem(key); if(!raw) return fallback; return JSON.parse(raw); }catch{ return fallback; }
+    // Load data from localStorage
+    function loadData() {
+      ASSOS = JSON.parse(localStorage.getItem('assos') || '[]');
+      FIRMS = JSON.parse(localStorage.getItem('firms') || '[]');
+      REPS = JSON.parse(localStorage.getItem('reps') || '[]');
     }
-    function writeJSON(key,val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch{} }
-    function loadLocal(){
-      ASSOS = readJSON(LS_ASSO, []);
-      FIRMS = readJSON(LS_FIRM, []);
-      REPS = readJSON(LS_REP, []);
+
+    // Save data to localStorage
+    function saveData() {
+      localStorage.setItem('assos', JSON.stringify(ASSOS));
+      localStorage.setItem('firms', JSON.stringify(FIRMS));
+      localStorage.setItem('reps', JSON.stringify(REPS));
     }
-    function getList(kind){ return kind === 'asso' ? ASSOS : kind === 'firm' ? FIRMS : REPS; }
-    function getKey(kind){ return kind === 'asso' ? LS_ASSO : kind === 'firm' ? LS_FIRM : LS_REP; }
-    function normalizePhone(v){ return String(v || '').replace(/\D/g,'').slice(-10); }
-    function phoneExists(kind, phone, currentId){
-      const num = normalizePhone(phone);
-      if(!num) return false;
-      return getList(kind).filter(x => x.id !== currentId).some(item => {
-        const candidates = [item.assoPhone, item.firmPhone, item.repPhone1, item.repPhone2];
-        return candidates.some(c => normalizePhone(c) === num);
-      });
-    }
-    function renderStats(){
+
+    // Render stats
+    function updateStats() {
       document.getElementById('assoCount').textContent = ASSOS.length;
       document.getElementById('firmCount').textContent = FIRMS.length;
       document.getElementById('repCount').textContent = REPS.length;
@@ -701,20 +637,198 @@
       document.getElementById('firmBadge').textContent = FIRMS.length;
       document.getElementById('repBadge').textContent = REPS.length;
     }
-    function nameOf(kind,id){
-      const item = getList(kind).find(x => x.id === id);
-      return item ? (item.assoName || item.firmName || item.repName || '') : '';
+
+    // Render lists
+    function renderLists() {
+      renderList('asso');
+      renderList('firm');
+      renderList('rep');
     }
-    function showStatus(msg){ document.getElementById('statusText').textContent = msg; }
-    function renderList(kind){
-      const container = document.getElementById(kind + 'List');
-      const q = document.getElementById(kind + 'Search').value.trim().toLowerCase();
-      const list = getList(kind).filter(item => {
-        const title = item.assoName || item.firmName || item.repName || '';
-        const extra = [item.assoPhone,item.firmPhone,item.repPhone1,item.repPhone2,item.assoGeoScope,item.firmTown,item.repTown,item.assoGeoType,item.firmDistrict,item.repDistrict].join(' ').toLowerCase();
-        return title.toLowerCase().includes(q) || extra.includes(q);
-      });
-      if(!list.length){ container.innerHTML = `<div class="empty">${kind === 'asso' ? t('noAssoc') : kind === 'firm' ? t('noFirm') : t('noRep')}</div>`; return; }
-      container.innerHTML = list.map(item => {
-        const title = item.assoName || item.firmName || item.repName || 'Untitled';
-        const sub = kind === 'asso' ? [item.assoPhone, item.assoGeoScope].filter(Boolean).join(' • ') : kind === 'firm' ? [item.firmP
+
+    function renderList(type) {
+      const list = type === 'asso' ? ASSOS : type === 'firm' ? FIRMS : REPS;
+      const searchVal = document.getElementById(type + 'Search').value.toLowerCase();
+      const filteredList = list.filter(item => 
+        (item.name && item.name.toLowerCase().includes(searchVal)) ||
+        (item.phone && item.phone.includes(searchVal))
+      );
+
+      const container = document.getElementById(type + 'List');
+      if (filteredList.length === 0) {
+        container.innerHTML = `<div class="empty-msg">No records yet</div>`;
+        return;
+      }
+
+      container.innerHTML = filteredList.map(item => `
+        <div class="list-item ${selected[type] === item.id ? 'selected' : ''}" onclick="selectItem('${type}', '${item.id}')">
+          <div class="item-content">
+            <div class="item-title">${item.name || 'Untitled'}</div>
+            <div class="item-detail">${item.phone || ''} ${item.town || ''}</div>
+          </div>
+          <div class="item-arrow">›</div>
+        </div>
+      `).join('');
+    }
+
+    function selectItem(type, id) {
+      selected[type] = id;
+      if (type === 'asso') {
+        selected.firm = null;
+        selected.rep = null;
+      }
+      if (type === 'firm') {
+        selected.rep = null;
+      }
+      renderLists();
+      document.getElementById('status').textContent = `Selected: ${id.substring(0, 8)}...`;
+    }
+
+    // Open form
+    function openForm(type) {
+      const isEdit = selected[type] !== null;
+      const record = isEdit ? (type === 'asso' ? ASSOS : type === 'firm' ? FIRMS : REPS).find(r => r.id === selected[type]) : {};
+
+      document.getElementById('modalTitle').textContent = isEdit ? `Edit ${type}` : `New ${type}`;
+      
+      document.getElementById('formContent').innerHTML = `
+        <div class="form-grid">
+          <div class="form-field full">
+            <label class="form-label">Name *</label>
+            <input id="formName" type="text" value="${record.name || ''}" />
+            <div class="form-helper" id="errName"></div>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Phone</label>
+            <input id="formPhone" type="tel" value="${record.phone || ''}" />
+            <div class="form-helper" id="errPhone"></div>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Email</label>
+            <input id="formEmail" type="email" value="${record.email || ''}" />
+            <div class="form-helper" id="errEmail"></div>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Town</label>
+            <input id="formTown" type="text" value="${record.town || ''}" />
+          </div>
+          <div class="form-field full">
+            <label class="form-label">Notes</label>
+            <textarea id="formNotes">${record.notes || ''}</textarea>
+          </div>
+        </div>
+        <div class="form-tip">💡 Fill at least the name and phone</div>
+        <div class="form-actions">
+          <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+          <button class="btn-save" onclick="saveRecord('${type}')">Save</button>
+        </div>
+      `;
+
+      document.getElementById('modalOverlay').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('show');
+    }
+
+    function saveRecord(type) {
+      const name = document.getElementById('formName').value.trim();
+      const phone = document.getElementById('formPhone').value.trim();
+      const email = document.getElementById('formEmail').value.trim();
+      const town = document.getElementById('formTown').value.trim();
+      const notes = document.getElementById('formNotes').value.trim();
+
+      if (!name) {
+        document.getElementById('errName').textContent = 'Name is required';
+        document.getElementById('errName').className = 'form-helper error';
+        return;
+      }
+
+      const isEdit = selected[type] !== null;
+      const list = type === 'asso' ? ASSOS : type === 'firm' ? FIRMS : REPS;
+
+      if (isEdit) {
+        const idx = list.findIndex(r => r.id === selected[type]);
+        list[idx] = { id: selected[type], name, phone, email, town, notes, updatedAt: new Date().toISOString() };
+      } else {
+        list.push({ id: 'id_' + Date.now(), name, phone, email, town, notes, createdAt: new Date().toISOString() });
+      }
+
+      saveData();
+      updateStats();
+      renderLists();
+      closeModal();
+      document.getElementById('status').textContent = isEdit ? 'Updated!' : 'Saved!';
+    }
+
+    function deleteRecord(type) {
+      if (!selected[type]) {
+        document.getElementById('status').textContent = 'Select first';
+        return;
+      }
+
+      const list = type === 'asso' ? ASSOS : type === 'firm' ? FIRMS : REPS;
+      const idx = list.findIndex(r => r.id === selected[type]);
+      if (idx >= 0) {
+        list.splice(idx, 1);
+      }
+
+      selected[type] = null;
+      saveData();
+      updateStats();
+      renderLists();
+      document.getElementById('status').textContent = 'Deleted!';
+    }
+
+    // Language toggle
+    document.getElementById('langBtn').addEventListener('click', () => {
+      lang = lang === 'ta' ? 'en' : 'ta';
+      localStorage.setItem('lang', lang);
+      location.reload();
+    });
+
+    // Search listeners
+    ['asso', 'firm', 'rep'].forEach(type => {
+      document.getElementById(type + 'Search').addEventListener('input', () => renderList(type));
+    });
+
+    // Button listeners
+    document.getElementById('newBtn').addEventListener('click', () => {
+      if (selected.asso && !selected.firm) {
+        openForm('firm');
+      } else if (selected.firm && !selected.rep) {
+        openForm('rep');
+      } else {
+        openForm('asso');
+      }
+    });
+
+    document.getElementById('editBtn').addEventListener('click', () => {
+      if (selected.rep) openForm('rep');
+      else if (selected.firm) openForm('firm');
+      else if (selected.asso) openForm('asso');
+      else document.getElementById('status').textContent = 'Select first';
+    });
+
+    document.getElementById('deleteBtn').addEventListener('click', () => {
+      if (selected.rep) deleteRecord('rep');
+      else if (selected.firm) deleteRecord('firm');
+      else if (selected.asso) deleteRecord('asso');
+      else document.getElementById('status').textContent = 'Select first';
+    });
+
+    document.getElementById('viewBtn').addEventListener('click', () => {
+      document.getElementById('status').textContent = 'Browse records';
+    });
+
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+    document.getElementById('modalOverlay').addEventListener('click', (e) => {
+      if (e.target.id === 'modalOverlay') closeModal();
+    });
+
+    // Initialize
+    loadData();
+    updateStats();
+    renderLists();
+  </script>
+</body>
+</html>
