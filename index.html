@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>TNVSP - Town Member Register</title>
   <style>
+    :root {
+      --primary: #1976d2;
+      --primary2: #0d47a1;
+      --green: #2e7d32;
+      --red: #d32f2f;
+      --text: #1f2d3d;
+      --muted: #607889;
+      --line: #dfeaf3;
+      --bg: #edf7ff;
+    }
+
     * { box-sizing: border-box; }
     html, body {
       margin: 0;
@@ -12,14 +23,10 @@
       height: 100%;
       font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background: linear-gradient(135deg, #e3f2fd 0%, #f5f5f5 100%);
-      color: #263238;
+      color: var(--text);
     }
 
-    body {
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
-    }
+    body { display: flex; justify-content: center; min-height: 100vh; }
 
     #app {
       width: min(100%, 920px);
@@ -28,13 +35,12 @@
       background: transparent;
     }
 
-    /* Header */
     .header {
       position: sticky;
       top: 0;
       z-index: 100;
       background: white;
-      border-bottom: 3px solid #1976d2;
+      border-bottom: 3px solid var(--primary);
       padding: 12px 16px;
       display: flex;
       align-items: center;
@@ -54,7 +60,7 @@
     .badge-icon {
       width: 40px;
       height: 40px;
-      background: linear-gradient(135deg, #1976d2, #7b1fa2);
+      background: linear-gradient(135deg, var(--primary), #7b1fa2);
       color: white;
       border-radius: 12px;
       display: flex;
@@ -69,18 +75,18 @@
       margin: 0;
       font-size: 16px;
       font-weight: 900;
-      color: #1976d2;
+      color: var(--primary);
     }
 
     .brand-text p {
       margin: 2px 0 0 0;
       font-size: 11px;
-      color: #607889;
+      color: var(--muted);
     }
 
     .lang-btn {
       padding: 10px 14px;
-      background: linear-gradient(135deg, #1976d2, #0d47a1);
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
       color: white;
       border: none;
       border-radius: 12px;
@@ -91,11 +97,28 @@
       flex-shrink: 0;
     }
 
-    .lang-btn:active {
-      opacity: 0.8;
+    .lang-btn:active { opacity: 0.8; }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px 8px;
+      color: var(--muted);
+      font-size: 12px;
+      background: rgba(25,118,210,0.02);
     }
 
-    /* Stats */
+    .sync-pill {
+      background: rgba(46,125,50,0.1);
+      color: var(--green);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
     .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -105,7 +128,7 @@
 
     .stat-card {
       background: white;
-      border: 1px solid #dfeaf3;
+      border: 1px solid var(--line);
       border-radius: 14px;
       padding: 12px;
       text-align: center;
@@ -116,30 +139,14 @@
       justify-content: center;
     }
 
-    .stat-icon {
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
+    .stat-icon { font-size: 20px; margin-bottom: 4px; }
+    .stat-number { font-size: 22px; font-weight: 900; color: var(--primary); }
+    .stat-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
 
-    .stat-number {
-      font-size: 22px;
-      font-weight: 900;
-      color: #1976d2;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: #607889;
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-
-    /* Sections */
     .section {
       margin: 10px 16px;
       background: white;
-      border: 1px solid #dfeaf3;
+      border: 1px solid var(--line);
       border-radius: 14px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
       overflow: hidden;
@@ -152,13 +159,13 @@
       gap: 10px;
       padding: 14px 16px;
       background: linear-gradient(135deg, #f8fbff, #edf5ff);
-      border-bottom: 1px solid #dfeaf3;
+      border-bottom: 1px solid var(--line);
     }
 
     .section-title {
       font-size: 15px;
       font-weight: 900;
-      color: #1976d2;
+      color: var(--primary);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -168,7 +175,7 @@
       width: 28px;
       height: 28px;
       background: rgba(25, 118, 210, 0.1);
-      color: #1976d2;
+      color: var(--primary);
       border-radius: 8px;
       display: flex;
       align-items: center;
@@ -187,14 +194,12 @@
       font-weight: 800;
     }
 
-    .section-body {
-      padding: 10px 12px;
-    }
+    .section-body { padding: 10px 12px; }
 
     .search-box {
       width: 100%;
       padding: 11px 12px;
-      border: 2px solid #dfeaf3;
+      border: 2px solid var(--line);
       border-radius: 12px;
       background: #f7fafe;
       font-size: 15px;
@@ -203,7 +208,7 @@
     }
 
     .search-box:focus {
-      border-color: #1976d2;
+      border-color: var(--primary);
       box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
     }
 
@@ -215,7 +220,7 @@
 
     .list-item {
       padding: 12px;
-      border: 1px solid #dfeaf3;
+      border: 1px solid var(--line);
       border-radius: 12px;
       background: #fff;
       cursor: pointer;
@@ -234,52 +239,30 @@
     }
 
     .list-item.selected {
-      border-color: #1976d2;
+      border-color: var(--primary);
       background: rgba(25, 118, 210, 0.05);
       box-shadow: inset 0 0 0 1px rgba(25, 118, 210, 0.12);
     }
 
-    .item-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .item-title {
-      font-weight: 800;
-      font-size: 15px;
-      color: #263238;
-      margin-bottom: 4px;
-      word-break: break-word;
-    }
-
-    .item-detail {
-      font-size: 12px;
-      color: #607889;
-      line-height: 1.4;
-    }
-
-    .item-arrow {
-      font-size: 18px;
-      color: #1976d2;
-      font-weight: 900;
-      flex-shrink: 0;
-    }
+    .item-content { flex: 1; min-width: 0; }
+    .item-title { font-weight: 800; font-size: 15px; color: var(--text); margin-bottom: 4px; }
+    .item-detail { font-size: 12px; color: var(--muted); line-height: 1.4; }
+    .item-arrow { font-size: 18px; color: var(--primary); font-weight: 900; flex-shrink: 0; }
 
     .empty-msg {
       text-align: center;
-      color: #607889;
+      color: var(--muted);
       padding: 20px 12px;
       font-size: 14px;
     }
 
-    /* Bottom Bar */
     .bottom-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       background: white;
-      border-top: 2px solid #dfeaf3;
+      border-top: 2px solid var(--line);
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
@@ -290,7 +273,7 @@
     .btn {
       border: none;
       background: transparent;
-      color: #1976d2;
+      color: var(--primary);
       padding: 10px 8px 12px;
       display: flex;
       flex-direction: column;
@@ -305,20 +288,11 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .btn:active {
-      opacity: 0.7;
-    }
+    .btn:active { opacity: 0.7; }
+    .btn-icon { font-size: 24px; line-height: 1; }
+    .btn.danger { color: var(--red); }
+    .btn.success { color: var(--green); }
 
-    .btn-icon {
-      font-size: 24px;
-      line-height: 1;
-    }
-
-    .btn.danger { color: #d32f2f; }
-    .btn.success { color: #2e7d32; }
-    .btn.warning { color: #f9a825; }
-
-    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -329,9 +303,7 @@
       justify-content: center;
     }
 
-    .modal.show {
-      display: flex;
-    }
+    .modal.show { display: flex; }
 
     .modal-content {
       width: min(100%, 920px);
@@ -352,23 +324,18 @@
       margin-bottom: 16px;
     }
 
-    .modal-title {
-      font-size: 18px;
-      font-weight: 900;
-      color: #1976d2;
-    }
+    .modal-title { font-size: 18px; font-weight: 900; color: var(--primary); }
 
     .close-btn {
       padding: 8px 12px;
       background: #edf3ff;
-      color: #1976d2;
+      color: var(--primary);
       border: none;
       border-radius: 8px;
       font-weight: 800;
       cursor: pointer;
     }
 
-    /* Form */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -382,21 +349,19 @@
       gap: 6px;
     }
 
-    .form-field.full {
-      grid-column: 1 / -1;
-    }
+    .form-field.full { grid-column: 1 / -1; }
 
     .form-label {
       font-size: 12px;
       font-weight: 800;
-      color: #607889;
+      color: var(--muted);
       text-transform: uppercase;
     }
 
     input, select, textarea {
       width: 100%;
       padding: 12px 11px;
-      border: 2px solid #dfeaf3;
+      border: 2px solid var(--line);
       border-radius: 12px;
       background: #f7fafe;
       font-size: 15px;
@@ -407,25 +372,11 @@
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: #1976d2;
+      border-color: var(--primary);
       box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
     }
 
-    textarea {
-      min-height: 88px;
-      resize: vertical;
-    }
-
-    .form-helper {
-      min-height: 14px;
-      font-size: 11px;
-      color: #607889;
-    }
-
-    .form-helper.error {
-      color: #d32f2f;
-      font-weight: 700;
-    }
+    textarea { min-height: 88px; resize: vertical; }
 
     .form-actions {
       display: flex;
@@ -445,28 +396,26 @@
 
     .btn-cancel {
       background: #edf3ff;
-      color: #1976d2;
+      color: var(--primary);
     }
 
     .btn-save {
-      background: linear-gradient(135deg, #1976d2, #0d47a1);
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
       color: white;
       box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
     }
 
     .form-tip {
       font-size: 11px;
-      color: #607889;
+      color: var(--muted);
       padding: 8px 0;
       margin-bottom: 10px;
-      border-top: 1px solid #dfeaf3;
+      border-top: 1px solid var(--line);
       padding-top: 10px;
     }
 
     @media (max-width: 640px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
+      .form-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -480,14 +429,12 @@
           <p id="subtitle">Town Member Register</p>
         </div>
       </div>
-      <button class="lang-btn" id="langBtn">தமிழ்</button>
+      <button class="lang-btn" id="langBtn" onclick="toggleLanguage()">தமிழ்</button>
     </div>
 
-    <div style="padding: 12px 16px; font-size: 12px; color: #607889; background: rgba(25,118,210,0.02);">
-      <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
-        <span id="status">Ready</span>
-        <span style="background: rgba(46,125,50,0.1); color: #2e7d32; border-radius: 999px; padding: 6px 10px; font-weight: 800; font-size: 11px;" id="syncStatus">Offline</span>
-      </div>
+    <div class="status-bar">
+      <span id="status">Ready</span>
+      <span class="sync-pill" id="syncStatus">Offline</span>
     </div>
 
     <div class="stats">
@@ -514,7 +461,7 @@
         <span class="count-badge" id="assoBadge">0</span>
       </div>
       <div class="section-body">
-        <input id="assoSearch" class="search-box" type="text" placeholder="Search..." />
+        <input id="assoSearch" class="search-box" type="text" placeholder="Search..." oninput="renderList('asso')" />
         <div id="assoList" class="list"></div>
       </div>
     </div>
@@ -525,7 +472,7 @@
         <span class="count-badge" id="firmBadge">0</span>
       </div>
       <div class="section-body">
-        <input id="firmSearch" class="search-box" type="text" placeholder="Search..." />
+        <input id="firmSearch" class="search-box" type="text" placeholder="Search..." oninput="renderList('firm')" />
         <div id="firmList" class="list"></div>
       </div>
     </div>
@@ -536,43 +483,69 @@
         <span class="count-badge" id="repBadge">0</span>
       </div>
       <div class="section-body">
-        <input id="repSearch" class="search-box" type="text" placeholder="Search..." />
+        <input id="repSearch" class="search-box" type="text" placeholder="Search..." oninput="renderList('rep')" />
         <div id="repList" class="list"></div>
       </div>
     </div>
   </div>
 
   <div class="bottom-bar">
-    <button class="btn" id="viewBtn"><span class="btn-icon">👁️</span> View</button>
-    <button class="btn danger" id="deleteBtn"><span class="btn-icon">🗑️</span> Delete</button>
-    <button class="btn success" id="newBtn"><span class="btn-icon">➕</span> New</button>
-    <button class="btn warning" id="editBtn"><span class="btn-icon">✏️</span> Edit</button>
+    <button class="btn" id="viewBtn" onclick="viewRecord()"><span class="btn-icon">👁️</span> View</button>
+    <button class="btn danger" id="deleteBtn" onclick="deleteRecord()"><span class="btn-icon">🗑️</span> Delete</button>
+    <button class="btn success" id="newBtn" onclick="newRecord()"><span class="btn-icon">➕</span> New</button>
+    <button class="btn" id="editBtn" onclick="editRecord()"><span class="btn-icon">✏️</span> Edit</button>
   </div>
 
-  <div id="modalOverlay" class="modal">
+  <div id="modalOverlay" class="modal" onclick="if(event.target.id==='modalOverlay') closeModal()">
     <div class="modal-content">
       <div class="modal-header">
         <div class="modal-title" id="modalTitle">New Record</div>
-        <button class="close-btn" id="closeModalBtn">Close</button>
+        <button class="close-btn" id="closeModalBtn" onclick="closeModal()">Close</button>
       </div>
       <div id="formContent"></div>
     </div>
   </div>
 
-  <script>
-    // Simple state management
-    let ASSOS = [];
-    let FIRMS = [];
-    let REPS = [];
-    let selected = { asso: null, firm: null, rep: null };
-    let lang = localStorage.getItem('lang') || 'ta';
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    import {
+      getFirestore, collection, getDocs, doc, setDoc, deleteDoc,
+      initializeFirestore, persistentLocalCache, persistentMultipleTabManager
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBE9-3DfexxDeZgsnbvIsN_EI79LTpHBJY",
+      authDomain: "tnvspmem.firebaseapp.com",
+      projectId: "tnvspmem",
+      storageBucket: "tnvspmem.firebasestorage.app",
+      messagingSenderId: "167496651526",
+      appId: "1:167496651526:web:6fc5421ae426bf2a524487"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = initializeFirestore(app, {
+      localCache: persistentLocalCache({
+        tabManager: persistentMultipleTabManager()
+      })
+    });
+    const auth = getAuth(app);
+
+    window.APP_DATA = {
+      db, collection, getDocs, doc, setDoc, deleteDoc,
+      ASSOS: [],
+      FIRMS: [],
+      REPS: [],
+      selected: { asso: null, firm: null, rep: null },
+      lang: localStorage.getItem('lang') || 'ta',
+      localMode: false
+    };
 
     const translations = {
       en: {
         assoc: 'Associations',
         firm: 'Member Firms',
         rep: 'Representatives',
-        search: 'Search...',
         new: 'New',
         edit: 'Edit',
         delete: 'Delete',
@@ -585,15 +558,17 @@
         email: 'Email',
         town: 'Town',
         notes: 'Notes',
-        required: 'Required',
-        saved: 'Saved!',
-        deleted: 'Deleted!'
+        ready: 'Ready',
+        offline: 'Offline',
+        online: 'Synced',
+        saved: '✓ Saved!',
+        deleted: '✓ Deleted!',
+        selectFirst: 'Select a record first'
       },
       ta: {
         assoc: 'சங்கங்கள்',
         firm: 'நிறுவனங்கள்',
         rep: 'பிரதிநிதிகள்',
-        search: 'தேடுங்கள்...',
         new: 'புதியது',
         edit: 'திருத்து',
         delete: 'நீக்கு',
@@ -606,61 +581,58 @@
         email: 'மின்னஞ்சல்',
         town: 'நகரம்',
         notes: 'குறிப்புகள்',
-        required: 'அவசியம்',
-        saved: 'சேமிக்கப்பட்டது!',
-        deleted: 'நீக்கப்பட்டது!'
+        ready: 'தயாராக',
+        offline: 'ஆஃப்லைன்',
+        online: 'சின்க்',
+        saved: '✓ சேமிக்கப்பட்டது!',
+        deleted: '✓ நீக்கப்பட்டது!',
+        selectFirst: 'முதலில் ஒன்றைத் தேர்ந்தெடுக்கவும்'
       }
     };
 
-    const t = (key) => translations[lang][key] || key;
+    window.t = (key) => translations[window.APP_DATA.lang][key] || key;
 
-    // Load data from localStorage
-    function loadData() {
-      ASSOS = JSON.parse(localStorage.getItem('assos') || '[]');
-      FIRMS = JSON.parse(localStorage.getItem('firms') || '[]');
-      REPS = JSON.parse(localStorage.getItem('reps') || '[]');
-    }
+    window.loadData = function() {
+      window.APP_DATA.ASSOS = JSON.parse(localStorage.getItem('assos') || '[]');
+      window.APP_DATA.FIRMS = JSON.parse(localStorage.getItem('firms') || '[]');
+      window.APP_DATA.REPS = JSON.parse(localStorage.getItem('reps') || '[]');
+    };
 
-    // Save data to localStorage
-    function saveData() {
-      localStorage.setItem('assos', JSON.stringify(ASSOS));
-      localStorage.setItem('firms', JSON.stringify(FIRMS));
-      localStorage.setItem('reps', JSON.stringify(REPS));
-    }
+    window.saveData = function() {
+      localStorage.setItem('assos', JSON.stringify(window.APP_DATA.ASSOS));
+      localStorage.setItem('firms', JSON.stringify(window.APP_DATA.FIRMS));
+      localStorage.setItem('reps', JSON.stringify(window.APP_DATA.REPS));
+    };
 
-    // Render stats
-    function updateStats() {
-      document.getElementById('assoCount').textContent = ASSOS.length;
-      document.getElementById('firmCount').textContent = FIRMS.length;
-      document.getElementById('repCount').textContent = REPS.length;
-      document.getElementById('assoBadge').textContent = ASSOS.length;
-      document.getElementById('firmBadge').textContent = FIRMS.length;
-      document.getElementById('repBadge').textContent = REPS.length;
-    }
+    window.updateStats = function() {
+      document.getElementById('assoCount').textContent = window.APP_DATA.ASSOS.length;
+      document.getElementById('firmCount').textContent = window.APP_DATA.FIRMS.length;
+      document.getElementById('repCount').textContent = window.APP_DATA.REPS.length;
+      document.getElementById('assoBadge').textContent = window.APP_DATA.ASSOS.length;
+      document.getElementById('firmBadge').textContent = window.APP_DATA.FIRMS.length;
+      document.getElementById('repBadge').textContent = window.APP_DATA.REPS.length;
+    };
 
-    // Render lists
-    function renderLists() {
-      renderList('asso');
-      renderList('firm');
-      renderList('rep');
-    }
+    window.getList = function(type) {
+      return type === 'asso' ? window.APP_DATA.ASSOS : type === 'firm' ? window.APP_DATA.FIRMS : window.APP_DATA.REPS;
+    };
 
-    function renderList(type) {
-      const list = type === 'asso' ? ASSOS : type === 'firm' ? FIRMS : REPS;
-      const searchVal = document.getElementById(type + 'Search').value.toLowerCase();
-      const filteredList = list.filter(item => 
-        (item.name && item.name.toLowerCase().includes(searchVal)) ||
-        (item.phone && item.phone.includes(searchVal))
+    window.renderList = function(type) {
+      const list = window.getList(type);
+      const search = document.getElementById(type + 'Search').value.toLowerCase();
+      const filtered = list.filter(item => 
+        (item.name && item.name.toLowerCase().includes(search)) ||
+        (item.phone && item.phone.includes(search))
       );
 
       const container = document.getElementById(type + 'List');
-      if (filteredList.length === 0) {
-        container.innerHTML = `<div class="empty-msg">No records yet</div>`;
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-msg">No records</div>';
         return;
       }
 
-      container.innerHTML = filteredList.map(item => `
-        <div class="list-item ${selected[type] === item.id ? 'selected' : ''}" onclick="selectItem('${type}', '${item.id}')">
+      container.innerHTML = filtered.map(item => `
+        <div class="list-item ${window.APP_DATA.selected[type] === item.id ? 'selected' : ''}" onclick="selectItem('${type}', '${item.id}')">
           <div class="item-content">
             <div class="item-title">${item.name || 'Untitled'}</div>
             <div class="item-detail">${item.phone || ''} ${item.town || ''}</div>
@@ -668,167 +640,171 @@
           <div class="item-arrow">›</div>
         </div>
       `).join('');
-    }
+    };
 
-    function selectItem(type, id) {
-      selected[type] = id;
+    window.selectItem = function(type, id) {
+      window.APP_DATA.selected[type] = id;
       if (type === 'asso') {
-        selected.firm = null;
-        selected.rep = null;
+        window.APP_DATA.selected.firm = null;
+        window.APP_DATA.selected.rep = null;
       }
       if (type === 'firm') {
-        selected.rep = null;
+        window.APP_DATA.selected.rep = null;
       }
-      renderLists();
-      document.getElementById('status').textContent = `Selected: ${id.substring(0, 8)}...`;
-    }
+      renderList('asso');
+      renderList('firm');
+      renderList('rep');
+      document.getElementById('status').textContent = 'Selected: ' + id.substring(0, 8) + '...';
+    };
 
-    // Open form
-    function openForm(type) {
-      const isEdit = selected[type] !== null;
-      const record = isEdit ? (type === 'asso' ? ASSOS : type === 'firm' ? FIRMS : REPS).find(r => r.id === selected[type]) : {};
+    window.newRecord = function() {
+      if (window.APP_DATA.selected.asso && !window.APP_DATA.selected.firm) {
+        openForm('firm', {});
+      } else if (window.APP_DATA.selected.firm && !window.APP_DATA.selected.rep) {
+        openForm('rep', {});
+      } else {
+        openForm('asso', {});
+      }
+    };
 
-      document.getElementById('modalTitle').textContent = isEdit ? `Edit ${type}` : `New ${type}`;
-      
-      document.getElementById('formContent').innerHTML = `
+    window.editRecord = function() {
+      if (window.APP_DATA.selected.rep) {
+        const item = window.APP_DATA.REPS.find(r => r.id === window.APP_DATA.selected.rep);
+        if (item) openForm('rep', item);
+      } else if (window.APP_DATA.selected.firm) {
+        const item = window.APP_DATA.FIRMS.find(r => r.id === window.APP_DATA.selected.firm);
+        if (item) openForm('firm', item);
+      } else if (window.APP_DATA.selected.asso) {
+        const item = window.APP_DATA.ASSOS.find(r => r.id === window.APP_DATA.selected.asso);
+        if (item) openForm('asso', item);
+      } else {
+        document.getElementById('status').textContent = window.t('selectFirst');
+      }
+    };
+
+    window.deleteRecord = function() {
+      if (window.APP_DATA.selected.rep) {
+        window.APP_DATA.REPS = window.APP_DATA.REPS.filter(r => r.id !== window.APP_DATA.selected.rep);
+        window.APP_DATA.selected.rep = null;
+      } else if (window.APP_DATA.selected.firm) {
+        window.APP_DATA.FIRMS = window.APP_DATA.FIRMS.filter(r => r.id !== window.APP_DATA.selected.firm);
+        window.APP_DATA.selected.firm = null;
+      } else if (window.APP_DATA.selected.asso) {
+        window.APP_DATA.ASSOS = window.APP_DATA.ASSOS.filter(r => r.id !== window.APP_DATA.selected.asso);
+        window.APP_DATA.selected.asso = null;
+      } else {
+        document.getElementById('status').textContent = window.t('selectFirst');
+        return;
+      }
+      window.saveData();
+      window.updateStats();
+      renderList('asso');
+      renderList('firm');
+      renderList('rep');
+      document.getElementById('status').textContent = window.t('deleted');
+    };
+
+    window.viewRecord = function() {
+      document.getElementById('status').textContent = 'Browse records in each section';
+    };
+
+    window.openForm = function(type, record) {
+      const isEdit = record.id;
+      document.getElementById('modalTitle').textContent = isEdit ? window.t('edit') : window.t('new');
+
+      const html = `
         <div class="form-grid">
           <div class="form-field full">
-            <label class="form-label">Name *</label>
-            <input id="formName" type="text" value="${record.name || ''}" />
-            <div class="form-helper" id="errName"></div>
+            <label class="form-label">${window.t('name')} *</label>
+            <input type="text" id="formName" value="${record.name || ''}" />
           </div>
           <div class="form-field">
-            <label class="form-label">Phone</label>
-            <input id="formPhone" type="tel" value="${record.phone || ''}" />
-            <div class="form-helper" id="errPhone"></div>
+            <label class="form-label">${window.t('phone')}</label>
+            <input type="tel" id="formPhone" value="${record.phone || ''}" />
           </div>
           <div class="form-field">
-            <label class="form-label">Email</label>
-            <input id="formEmail" type="email" value="${record.email || ''}" />
-            <div class="form-helper" id="errEmail"></div>
+            <label class="form-label">${window.t('email')}</label>
+            <input type="email" id="formEmail" value="${record.email || ''}" />
           </div>
           <div class="form-field">
-            <label class="form-label">Town</label>
-            <input id="formTown" type="text" value="${record.town || ''}" />
+            <label class="form-label">${window.t('town')}</label>
+            <input type="text" id="formTown" value="${record.town || ''}" />
           </div>
           <div class="form-field full">
-            <label class="form-label">Notes</label>
+            <label class="form-label">${window.t('notes')}</label>
             <textarea id="formNotes">${record.notes || ''}</textarea>
           </div>
         </div>
-        <div class="form-tip">💡 Fill at least the name and phone</div>
         <div class="form-actions">
           <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-          <button class="btn-save" onclick="saveRecord('${type}')">Save</button>
+          <button class="btn-save" onclick="saveForm('${type}', '${record.id || ''}')">Save</button>
         </div>
       `;
 
+      document.getElementById('formContent').innerHTML = html;
       document.getElementById('modalOverlay').classList.add('show');
-    }
+    };
 
-    function closeModal() {
+    window.closeModal = function() {
       document.getElementById('modalOverlay').classList.remove('show');
-    }
+    };
 
-    function saveRecord(type) {
+    window.saveForm = function(type, currentId) {
       const name = document.getElementById('formName').value.trim();
-      const phone = document.getElementById('formPhone').value.trim();
-      const email = document.getElementById('formEmail').value.trim();
-      const town = document.getElementById('formTown').value.trim();
-      const notes = document.getElementById('formNotes').value.trim();
-
       if (!name) {
-        document.getElementById('errName').textContent = 'Name is required';
-        document.getElementById('errName').className = 'form-helper error';
+        document.getElementById('status').textContent = 'Name is required';
         return;
       }
 
-      const isEdit = selected[type] !== null;
-      const list = type === 'asso' ? ASSOS : type === 'firm' ? FIRMS : REPS;
+      const data = {
+        id: currentId || 'id_' + Date.now(),
+        name,
+        phone: document.getElementById('formPhone').value.trim(),
+        email: document.getElementById('formEmail').value.trim(),
+        town: document.getElementById('formTown').value.trim(),
+        notes: document.getElementById('formNotes').value.trim()
+      };
 
-      if (isEdit) {
-        const idx = list.findIndex(r => r.id === selected[type]);
-        list[idx] = { id: selected[type], name, phone, email, town, notes, updatedAt: new Date().toISOString() };
+      const list = window.getList(type);
+      if (currentId) {
+        const idx = list.findIndex(r => r.id === currentId);
+        if (idx >= 0) list[idx] = data;
       } else {
-        list.push({ id: 'id_' + Date.now(), name, phone, email, town, notes, createdAt: new Date().toISOString() });
+        list.push(data);
       }
 
-      saveData();
-      updateStats();
-      renderLists();
+      window.saveData();
+      window.updateStats();
+      renderList('asso');
+      renderList('firm');
+      renderList('rep');
       closeModal();
-      document.getElementById('status').textContent = isEdit ? 'Updated!' : 'Saved!';
-    }
+      document.getElementById('status').textContent = window.t('saved');
+    };
 
-    function deleteRecord(type) {
-      if (!selected[type]) {
-        document.getElementById('status').textContent = 'Select first';
-        return;
-      }
-
-      const list = type === 'asso' ? ASSOS : type === 'firm' ? FIRMS : REPS;
-      const idx = list.findIndex(r => r.id === selected[type]);
-      if (idx >= 0) {
-        list.splice(idx, 1);
-      }
-
-      selected[type] = null;
-      saveData();
-      updateStats();
-      renderLists();
-      document.getElementById('status').textContent = 'Deleted!';
-    }
-
-    // Language toggle
-    document.getElementById('langBtn').addEventListener('click', () => {
-      lang = lang === 'ta' ? 'en' : 'ta';
-      localStorage.setItem('lang', lang);
+    window.toggleLanguage = function() {
+      window.APP_DATA.lang = window.APP_DATA.lang === 'ta' ? 'en' : 'ta';
+      localStorage.setItem('lang', window.APP_DATA.lang);
       location.reload();
-    });
-
-    // Search listeners
-    ['asso', 'firm', 'rep'].forEach(type => {
-      document.getElementById(type + 'Search').addEventListener('input', () => renderList(type));
-    });
-
-    // Button listeners
-    document.getElementById('newBtn').addEventListener('click', () => {
-      if (selected.asso && !selected.firm) {
-        openForm('firm');
-      } else if (selected.firm && !selected.rep) {
-        openForm('rep');
-      } else {
-        openForm('asso');
-      }
-    });
-
-    document.getElementById('editBtn').addEventListener('click', () => {
-      if (selected.rep) openForm('rep');
-      else if (selected.firm) openForm('firm');
-      else if (selected.asso) openForm('asso');
-      else document.getElementById('status').textContent = 'Select first';
-    });
-
-    document.getElementById('deleteBtn').addEventListener('click', () => {
-      if (selected.rep) deleteRecord('rep');
-      else if (selected.firm) deleteRecord('firm');
-      else if (selected.asso) deleteRecord('asso');
-      else document.getElementById('status').textContent = 'Select first';
-    });
-
-    document.getElementById('viewBtn').addEventListener('click', () => {
-      document.getElementById('status').textContent = 'Browse records';
-    });
-
-    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
-    document.getElementById('modalOverlay').addEventListener('click', (e) => {
-      if (e.target.id === 'modalOverlay') closeModal();
-    });
+    };
 
     // Initialize
-    loadData();
-    updateStats();
-    renderLists();
+    window.loadData();
+    window.updateStats();
+    renderList('asso');
+    renderList('firm');
+    renderList('rep');
+    document.getElementById('langBtn').textContent = window.APP_DATA.lang === 'ta' ? 'English' : 'தமிழ்';
+
+    // Firebase sync
+    try {
+      await signInAnonymously(auth);
+      window.APP_DATA.localMode = false;
+      document.getElementById('syncStatus').textContent = window.t('online');
+    } catch {
+      window.APP_DATA.localMode = true;
+      document.getElementById('syncStatus').textContent = window.t('offline');
+    }
   </script>
 </body>
 </html>
